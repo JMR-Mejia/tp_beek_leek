@@ -1,6 +1,10 @@
 # tp_beek_leek
 
-A new Flutter project.
+## Breve resumen
+
+Para este proyecto utilize diversas formas que eh aprendido y utilizado para la creacio de pantallas y componentes, intente utilizar la arquiutectura BLoC pero devido a que no la manejo muy bien me hizo perder tiempo y avanzar muy poco con el test, termine utilizando un modelo mas comun que es el MVC para trabajar cada vista y mantener un orden en funcionalidad que hace cada vista.
+
+Cada vista la dibuje en un papel primero preparando todo lo necesario para programar. Cualquier feedback de bueno o malo ayuda bastante, estare atento a los avances de la vacante.
 
 ## Getting Started
 
