@@ -6,38 +6,38 @@ import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:tp_beek_leek/src/provider/shared_pref.dart';
 import 'package:tp_beek_leek/src/widgets/my_progress_dialog.dart';
 
-class LoginController {
+class RegisterController {
   BuildContext context;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   final SharedPref _sharedPref = SharedPref();
 
-  LoginController(this.context);
+  RegisterController(this.context);
 
-  void login() async {
+  void register() async {
     ProgressDialog progressDialog = MyProgressDialog.create(
       context,
-      'Logging in...',
+      'Registering...',
     );
     await progressDialog.show();
     String username = usernameController.text.trim();
-    if (username.isNotEmpty) {
-      Response response = await get(Uri.parse('https://jsonplaceholder.typicode.com/users?username=$username'));
-      await progressDialog.hide();
-      if (response.statusCode == 200) {
-        List data = jsonDecode(response.body);
-        if (data.isNotEmpty) {
-          saveUsername(username);
-          saveUserId(data[0]['id'].toString());
-          saveEmail(data[0]['email']);
-          Navigator.pushNamedAndRemoveUntil(context, 'feed', (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Usuario no encontrado'),
-            ),
-          );
-        }
+    String email = emailController.text.trim();
+    if (username.isNotEmpty && email.isNotEmpty) {
+      Response response = await post(Uri.parse('https://jsonplaceholder.typicode.com/users'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'username': username,
+            'email': email,
+          }));
+      if (response.statusCode == 201) {
+        saveUsername(username);
+        saveEmail(email);
+        saveUserId("11");
+        await progressDialog.hide();
+        Navigator.pushNamedAndRemoveUntil(context, 'feed', (route) => false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -45,7 +45,6 @@ class LoginController {
           ),
         );
       }
-      // Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -53,6 +52,7 @@ class LoginController {
         ),
       );
     }
+    await progressDialog.hide();
   }
 
   void saveUsername(String username) async {
@@ -66,10 +66,4 @@ class LoginController {
   void saveEmail(String email) async {
     _sharedPref.save('email', email);
   }
-
-  // register
-  void register() {
-    Navigator.pushNamed(context, 'register');
-  }
-  
 }

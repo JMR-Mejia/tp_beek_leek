@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                       // onPressed: _loginController.goToRegister,
-                      onPressed: () {},
+                      onPressed: _loginController.register,
                       child: const Text(
                         'Registrate',
                         style: TextStyle(

@@ -16,7 +16,7 @@ class SharedPref {
     return prefs.containsKey(key);
   }
 
-  void remove(String key) async {
+  Future remove(String key) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tp_beek_leek/src/pages/feed/feed_page.dart';
 import 'package:tp_beek_leek/src/pages/login/login_page.dart';
+import 'package:tp_beek_leek/src/pages/post/create/create_post_page.dart';
+import 'package:tp_beek_leek/src/pages/register/register_page.dart';
+import 'package:tp_beek_leek/src/pages/trips/trips.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
       initialRoute: 'login',
       routes: {
         'login': (context) => const LoginPage(),
-        'feed': (context) => const FeedPage(),
+        'createPost': (context) => const CreatePostWidget(),
+        'register': (context) => const RegisterPage(),
+        'feed': (context) => const TripsPage(),
       },
     );
   }
